@@ -1,28 +1,38 @@
 <template>
   <div>
-    <div
-      v-for="(row, index) in employees"
-      :key="`employee-${index}`"
-      class="employees"
-    >
-      <div>
-        <h2>Anders Larsen</h2>
-        <p>Ala@novicell.dk</p>
+    <div class="box">
+      <div class="input img">
+        <input
+          v-model="search"
+          type="text"
+          placeholder="...React"
+          class="input__field"
+        />
       </div>
-      <div class="location">
-        <img src="~assets/location.svg" class="location-svg" />
-        <p class="location__city">Aarhus</p>
-      </div>
-      <div class="team">
-        <img src="~assets/suitcase.svg" class="location-svg" />
-        <p class="team__name">Front-end</p>
-      </div>
-      <div class="hours">
-        <img src="~assets/wall-clock.svg" class="location-svg" />
-        <p class="hours__number">420</p>
-      </div>
-      <div class="chevron">
-        <p>&rsaquo;</p>
+      <div
+        v-for="(row, index) in filteredBlogs"
+        :key="`employee-${index}`"
+        class="employees"
+      >
+        <div class="info">
+          <h2>{{ row.username }}</h2>
+          <p>Ala@novicell.dk</p>
+        </div>
+        <div class="location">
+          <img src="~assets/location.svg" class="location-svg" />
+          <p class="location__city"></p>
+        </div>
+        <div class="team">
+          <img src="~assets/suitcase.svg" class="location-svg" />
+          <p class="team__name"></p>
+        </div>
+        <div class="hours">
+          <img src="~assets/wall-clock.svg" class="location-svg" />
+          <p class="hours__number">120</p>
+        </div>
+        <div class="chevron">
+          <p>&rsaquo;</p>
+        </div>
       </div>
     </div>
   </div>
@@ -31,12 +41,29 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  search: '',
+  data() {
+    return {
+      search: '',
+    }
+  },
   //   When mounted post registrations from store
-  computed: mapState(['employees']),
-
+  // computed: ,
+  // mix this into the outer object with the object spread operator
   mounted() {
     this.$store.dispatch('loadEmployees')
+  },
+  computed: {
+    // employees() {
+    // return this.$store.state.employees
+    // },
+    filteredBlogs() {
+      const keyword = this.search.toLowerCase()
+      if (!keyword.length) return this.employees
+      return this.employees.filter((row) =>
+        row.username.toLowerCase().includes(keyword)
+      )
+    },
+    ...mapState(['employees']),
   },
 }
 </script>
@@ -58,10 +85,13 @@ h1 {
 .location,
 .team,
 .hours {
+  width: 100%;
   display: flex;
   justify-content: center;
   vertical-align: middle;
-  margin-right: 5em;
+}
+.info {
+  max-width: 10%;
 }
 .location__city,
 .team__name,
@@ -78,6 +108,9 @@ h1 {
   border-radius: 15px;
   margin: auto;
   color: #fff;
+  display: flex;
+  max-width: 9%;
+  margin-right: 5em;
 }
 .chevron {
   transform: rotate(90deg);
