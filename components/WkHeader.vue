@@ -6,30 +6,15 @@
     <div class="banner">
       <h1 class="banner__headline">Who Knows?</h1>
       <h3 class="banner__tagline">Find Novicells most experienced employee</h3>
-      <div class="input img">
-        <input
-          v-model="filter"
-          type="text"
-          placeholder="...React"
-          class="input__field"
-        />
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  props: {
-    filter: {
-      type: String,
-      default: '',
-    },
-  },
-}
+export default {}
 </script>
 
-<style>
+<style scoped>
 .banner {
   background: rgb(200, 0, 70);
   background: linear-gradient(
