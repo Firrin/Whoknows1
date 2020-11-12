@@ -97,7 +97,7 @@ h1 {
   padding: 10px;
   background: url(~assets/search.svg) no-repeat right center;
   background-color: #fff;
-  border-radius: 12px;
+  border-radius: 20px;
   /*
     display: inline-block;
     margin: auto;
