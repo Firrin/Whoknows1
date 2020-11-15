@@ -9,6 +9,10 @@ export const mutations = {
   SET_Locations(state, locations) {
     state.locations = locations
   },
+  addNewFilter(state, payload) {
+    //   state.locations.filters = state.locations.filters.concat(payload)
+    state.locations.filters = payload
+  },
 }
 export const actions = {
   loadLocations({ commit }) {
@@ -28,5 +32,9 @@ export const actions = {
         console.log(employees)
         commit('SET_Employees', employees)
       })
+  },
+  handleFilter(context, payload) {
+    console.log(payload)
+    context.commit('addNewFilter', payload)
   },
 }

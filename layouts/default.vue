@@ -16,7 +16,11 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-
+.aside {
+  position: fixed;
+  display: flex;
+  justify-content: end;
+}
 *,
 *::before,
 *::after {
