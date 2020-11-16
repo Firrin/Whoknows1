@@ -15,15 +15,6 @@ export const mutations = {
   },
 }
 export const actions = {
-  loadLocations({ commit }) {
-    axios
-      .get('https://5fa909b5c9b4e90016e69eb7.mockapi.io/Location')
-      .then((response) => response.data)
-      .then((locations) => {
-        console.log(locations)
-        commit('SET_Locations', locations)
-      })
-  },
   loadEmployees({ commit }) {
     axios
       .get('https://5fa909b5c9b4e90016e69eb7.mockapi.io/Employees')
@@ -33,6 +24,16 @@ export const actions = {
         commit('SET_Employees', employees)
       })
   },
+  /* loadLocations({ commit }) {
+    axios
+      .get('https://5fa909b5c9b4e90016e69eb7.mockapi.io/Location')
+      .then((response) => response.data)
+      .then((locations) => {
+        console.log(locations)
+        commit('SET_Locations', locations)
+      })
+  }, 
+  */
   handleFilter(context, payload) {
     console.log(payload)
     context.commit('addNewFilter', payload)

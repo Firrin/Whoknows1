@@ -13,31 +13,30 @@
         for=""
         >Team</label
       >
-
-      <div
-        v-for="(row, index) in filteredProjects"
-        :key="`employee-${index}`"
-        class="employees"
-      >
-        <div class="info">
-          <h2>{{ row.name }}</h2>
-          <p>Ala@novicell.dk</p>
+      <div v-for="(row, index) in filteredProjects" :key="`employee-${index}`">
+        <div class="employees">
+          <div class="info">
+            <h2>{{ row.name }}</h2>
+            <p>Ala@novicell.dk</p>
+          </div>
+          <div class="location">
+            <img src="~assets/location.svg" class="location-svg" />
+            <p class="location__city">{{ row.Location }}</p>
+          </div>
+          <div class="team">
+            <img src="~assets/suitcase.svg" class="location-svg" />
+            <p class="team__name">{{ row.Team }}</p>
+          </div>
+          <div class="hours">
+            <img src="~assets/wall-clock.svg" class="location-svg" />
+            <p class="hours__number">120</p>
+          </div>
+          <div class="chevron" @click="showSkills(index)">
+            <!--'' : '&lsaquo;' -->
+            &rsaquo;
+          </div>
         </div>
-        <div class="location">
-          <img src="~assets/location.svg" class="location-svg" />
-          <p class="location__city">{{ row.Location }}</p>
-        </div>
-        <div class="team">
-          <img src="~assets/suitcase.svg" class="location-svg" />
-          <p class="team__name">{{ row.Team }}</p>
-        </div>
-        <div class="hours">
-          <img src="~assets/wall-clock.svg" class="location-svg" />
-          <p class="hours__number">120</p>
-        </div>
-        <div class="chevron">
-          <p>&rsaquo;</p>
-        </div>
+        <div class="hide" :class="{ show: row.show }">123</div>
       </div>
     </div>
   </div>
@@ -58,6 +57,13 @@ export default {
   // mix this into the outer object with the object spread operator
   mounted() {
     this.$store.dispatch('loadEmployees', 'loadLocations')
+  },
+  methods: {
+    showSkills(index) {
+      const row = this.employees[index]
+      row.show = !row.show
+      this.$set(this.employees, index, row)
+    },
   },
   computed: {
     // employees() {
@@ -102,7 +108,7 @@ export default {
 .employees {
   box-shadow: 0px 3px 5px #00000029;
   width: 60%;
-  margin: 1em auto;
+  margin: 1em auto 0 auto;
   display: flex;
   justify-content: space-between;
   background: #fff;
@@ -111,6 +117,26 @@ export default {
 }
 h1 {
   font-weight: normal;
+}
+.hide {
+  color: blue;
+  display: none;
+}
+.show {
+  color: red;
+  background: rgb(218, 218, 218);
+  border-radius: 0 0 0.5em 0.5em;
+  padding: 1em 1em;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: 1s ease-in all;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.message.content {
+  padding: 20px;
 }
 .location,
 .team,
