@@ -13,7 +13,11 @@
         for=""
         >Team</label
       >
-      <div v-for="(row, index) in filteredProjects" :key="`employee-${index}`">
+      <div
+        v-for="(row, index) in filteredProjects"
+        :key="`employee-${index}`"
+        @click="selected = row.id"
+      >
         <div class="employees">
           <div class="info">
             <h2>{{ row.name }}</h2>
@@ -31,12 +35,19 @@
             <img src="~assets/wall-clock.svg" class="location-svg" />
             <p class="hours__number">120</p>
           </div>
-          <div class="chevron" @click="showSkills(index)">
+          <div class="chevron">
             <!--'' : '&lsaquo;' -->
             &rsaquo;
           </div>
         </div>
-        <div class="hide" :class="{ show: row.show }">123</div>
+        <div class="hide projects" :class="{ show: row.id == selected }">
+          <div>
+            <div class="skills__project"></div>
+            <div>Case</div>
+            <div>JiraLink</div>
+            <div>Hours</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,6 +61,7 @@ export default {
       search: '',
       checkedLocation: [],
       checkedTeam: [],
+      selected: undefined,
     }
   },
   //   When mounted post registrations from store
@@ -58,13 +70,7 @@ export default {
   mounted() {
     this.$store.dispatch('loadEmployees', 'loadLocations')
   },
-  methods: {
-    showSkills(index) {
-      const row = this.employees[index]
-      row.show = !row.show
-      this.$set(this.employees, index, row)
-    },
-  },
+  methods: {},
   computed: {
     // employees() {
     // return this.$store.state.employees
@@ -134,7 +140,11 @@ h1 {
   margin: 0 auto;
   width: 60%;
 }
-
+.projects {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 .message.content {
   padding: 20px;
 }

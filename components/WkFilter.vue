@@ -14,7 +14,7 @@
             type="checkbox"
             value="Aarhus"
             class="filter__input checkbox"
-            @click="Addchecked()" /><span class="checkmark"></span
+            @change="Addchecked()" /><span class="checkmark"></span
         ></label>
       </div>
       <div>
@@ -25,7 +25,7 @@
             type="checkbox"
             value="London"
             class="filter__input checkbox"
-            @click="Addchecked()" /><span class="checkmark"></span
+            @change="Addchecked()" /><span class="checkmark"></span
         ></label>
       </div>
       <div>
@@ -36,7 +36,7 @@
             type="checkbox"
             value="Copenhagen"
             class="filter__input checkbox"
-            @click="Addchecked()" /><span class="checkmark"></span
+            @change="Addchecked()" /><span class="checkmark"></span
         ></label>
       </div>
       <div>
@@ -47,7 +47,7 @@
             type="checkbox"
             value="Barcelona"
             class="filter__input checkbox"
-            @click="Addchecked()" /><span class="checkmark"></span
+            @change="Addchecked()" /><span class="checkmark"></span
         ></label>
       </div>
       <div>
@@ -58,7 +58,7 @@
             type="checkbox"
             value="Oslo"
             class="filter__input checkbox"
-            @click="Addchecked()" /><span class="checkmark"></span
+            @change="Addchecked()" /><span class="checkmark"></span
         ></label>
       </div>
       <div>
@@ -69,7 +69,7 @@
             type="checkbox"
             value="Amsterdam"
             class="filter__input checkbox"
-            @click="Addchecked()" /><span class="checkmark"></span
+            @change="Addchecked()" /><span class="checkmark"></span
         ></label>
       </div>
     </div>
