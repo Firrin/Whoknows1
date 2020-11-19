@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="box">
+    <div class="banner">
+      <img src="~assets/Novicell-logo.png" alt="" class="header__logo" />
+      <p class="banner__headline">Who Knows?</p>
+      <p class="banner__tagline">Find Novicells most experienced employee</p>
       <div class="input img">
         <input
           v-model="search"
@@ -10,10 +13,15 @@
         />
         <input type="button" @click="sendQuery()" />
       </div>
-      <input v-model="checkedTeam" type="checkbox" value="Team 1" /><label
-        for=""
-        >Team</label
-      >
+    </div>
+    <div class="resultNumber">
+      <span></span>
+      <div class="resultNumber__text">
+        We found <span>{{ employees.length }} wise guys</span>, from your search
+        on <span>{{ search }}</span>
+      </div>
+    </div>
+    <div class="box">
       <div v-for="(row, index) in filteredProjects" :key="`employee-${index}`">
         <div class="employees">
           <div class="avatar">
@@ -49,12 +57,10 @@
             class="skills"
           >
             <div class="skills__flex">
-              <div class="skills__name">
-                <input type="text" :value="skill" />
-              </div>
-              <div class="skills__project">{{ skill.Skills }}</div>
-              <div class="skills__lastcommit">{{ skill.LastCommit }}</div>
-              <div class="skills_hours">{{ skill.Hours }}</div>
+              <div class="skills__name"></div>
+              <div class="skills__project"></div>
+              <div class="skills__lastcommit"></div>
+              <div class="skills_hours"></div>
             </div>
           </div>
         </div>
@@ -118,6 +124,22 @@ export default {
 </script>
 
 <style scoped>
+.resultNumber {
+  background-color: var(--color-spearmint);
+  padding: 0.3em;
+  box-shadow: 1px 1px 16px 20px var(--color-spearmint);
+  border-radius: 9px;
+  width: 37%;
+  margin: 1em auto 4em auto;
+  display: flex;
+  justify-content: center;
+}
+.resultNumber__text {
+  font-size: 20px;
+}
+.resultNumber span {
+  font-weight: bold;
+}
 .employees {
   box-shadow: 0px 3px 5px #00000029;
   width: 60%;
@@ -215,5 +237,75 @@ export default {
 .skills__flex {
   display: flex;
   justify-content: space-evenly;
+}
+.banner {
+  background: rgb(200, 0, 70);
+  background: linear-gradient(
+    180deg,
+    rgba(200, 0, 70, 1) 0%,
+    rgba(100, 0, 35, 1) 100%,
+    rgba(100, 0, 35, 1) 100%
+  );
+  padding-bottom: 5em;
+  margin-bottom: 5em;
+  text-align: center;
+  color: #fff;
+}
+.banner__headline {
+  padding-top: 3em;
+  font-size: 44px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  font-weight: bold;
+  font-family: Averta;
+}
+.banner__tagline {
+  font-size: 22px;
+  margin-block-start: 0em;
+  margin-block-end: 0.5em;
+  font-family: Averta;
+}
+.header__logo {
+  height: 64px;
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+.header {
+  display: block;
+  background-color: rgb(200, 0, 70);
+}
+.container {
+  background: #eaeaea;
+}
+.input img {
+  position: absolute;
+}
+.input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.icon {
+  padding: 10px;
+  min-width: 40px;
+}
+.input__field {
+  width: 30%;
+  padding: 10px;
+  background: url(~assets/search.svg) no-repeat right center;
+  background-color: #fff;
+  border-radius: 20px;
+  border: 0;
+  height: 23px;
+  /*
+    display: inline-block;
+    margin: auto;
+    height: 3em;
+    width: 25%;
+    border-radius: 12px;
+    */
+}
+.input--search {
+  display: inline-flex;
 }
 </style>

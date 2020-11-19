@@ -121,8 +121,8 @@ export default {
 .filter {
   background-color: #f2f2f2;
   position: absolute;
-  top: 45%;
-  right: 0;
+  top: 64%;
+  right: 2%;
   width: 15vw;
   margin: 1%;
   z-index: 1;

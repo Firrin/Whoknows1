@@ -11,6 +11,9 @@ export default {}
 </script>
 
 <style>
+.container {
+  font-family: var(--base-font-family);
+}
 .box {
   height: 100vh;
 }
