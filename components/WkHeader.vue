@@ -27,6 +27,9 @@ export default {}
   text-align: center;
   color: #fff;
 }
+.banner__headline {
+  margin-top: 0;
+}
 .header__logo {
   height: 64px;
 }

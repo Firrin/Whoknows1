@@ -15,13 +15,15 @@ export const mutations = {
   },
 }
 export const actions = {
-  loadEmployees({ commit }) {
+  loadEmployees(context, payload) {
     axios
-      .get('https://5fa909b5c9b4e90016e69eb7.mockapi.io/Employees')
+      .get(
+        `https://5fa909b5c9b4e90016e69eb7.mockapi.io/Employees?search=${payload}`
+      )
       .then((response) => response.data)
       .then((employees) => {
         console.log(employees)
-        commit('SET_Employees', employees)
+        context.commit('SET_Employees', employees)
       })
   },
   /* loadLocations({ commit }) {

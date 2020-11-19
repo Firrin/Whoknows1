@@ -8,20 +8,22 @@
           placeholder="...React"
           class="input__field"
         />
+        <input type="button" @click="sendQuery()" />
       </div>
       <input v-model="checkedTeam" type="checkbox" value="Team 1" /><label
         for=""
         >Team</label
       >
-      <div
-        v-for="(row, index) in filteredProjects"
-        :key="`employee-${index}`"
-        @click="selected = row.id"
-      >
+      <div v-for="(row, index) in filteredProjects" :key="`employee-${index}`">
         <div class="employees">
+          <div class="avatar">
+            <img :src="row.avatar" alt="" class="avatar-img" />
+          </div>
           <div class="info">
-            <h2>{{ row.name }}</h2>
-            <p>Ala@novicell.dk</p>
+            <div>
+              <p class="info__name">{{ row.name }}</p>
+              <p class="info__email">Ala@novicell.dk</p>
+            </div>
           </div>
           <div class="location">
             <img src="~assets/location.svg" class="location-svg" />
@@ -35,17 +37,25 @@
             <img src="~assets/wall-clock.svg" class="location-svg" />
             <p class="hours__number">120</p>
           </div>
-          <div class="chevron">
+          <div class="chevron" @click="selected = row.id">
             <!--'' : '&lsaquo;' -->
-            &rsaquo;
+            <p>&rsaquo;</p>
           </div>
         </div>
-        <div class="hide projects" :class="{ show: row.id == selected }">
-          <div>
-            <div class="skills__project"></div>
-            <div>Case</div>
-            <div>JiraLink</div>
-            <div>Hours</div>
+        <div class="hide" :class="{ show: row.id == selected }">
+          <div
+            v-for="(skill, index) in row.Skills"
+            :key="`skill-${index}`"
+            class="skills"
+          >
+            <div class="skills__flex">
+              <div class="skills__name">
+                <input type="text" :value="skill" />
+              </div>
+              <div class="skills__project">{{ skill.Skills }}</div>
+              <div class="skills__lastcommit">{{ skill.LastCommit }}</div>
+              <div class="skills_hours">{{ skill.Hours }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -64,13 +74,15 @@ export default {
       selected: undefined,
     }
   },
+  methods: {
+    sendQuery() {
+      this.$store.dispatch('loadEmployees', this.search)
+    },
+  },
   //   When mounted post registrations from store
   // computed: ,
   // mix this into the outer object with the object spread operator
-  mounted() {
-    this.$store.dispatch('loadEmployees', 'loadLocations')
-  },
-  methods: {},
+
   computed: {
     // employees() {
     // return this.$store.state.employees
@@ -86,11 +98,6 @@ export default {
         filterprojects = filterprojects.filter((row) => {
           return this.checkedTeam.includes(row.Team)
         })
-      }
-      if (this.search.length > 0) {
-        filterprojects = filterprojects.filter((row) =>
-          row.name.toLowerCase().includes(this.search.toLowerCase())
-        )
       }
       return filterprojects
     },
@@ -116,48 +123,64 @@ export default {
   width: 60%;
   margin: 1em auto 0 auto;
   display: flex;
-  justify-content: space-between;
   background: #fff;
   border-radius: 0.5em;
-  padding: 1em 1em;
-}
-h1 {
-  font-weight: normal;
 }
 .hide {
-  color: blue;
   display: none;
 }
 .show {
   color: red;
   background: rgb(218, 218, 218);
   border-radius: 0 0 0.5em 0.5em;
-  padding: 1em 1em;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
   transition: 1s ease-in all;
   margin: 0 auto;
   width: 60%;
+  padding-bottom: 3em;
+}
+.chevronRotate {
+  transform: rotate(180deg);
 }
 .projects {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
-.message.content {
-  padding: 20px;
-}
 .location,
 .team,
-.hours {
+.hours,
+.avatar {
   width: 100%;
   display: flex;
-  justify-content: center;
-  vertical-align: middle;
+}
+.avatar-img {
+  height: 70px;
+  border-radius: 50%;
+  margin-left: 2em;
+}
+.avatar {
+  margin: 1em 0;
+  width: 16%;
+  padding-right: 15px;
 }
 .info {
-  max-width: 10%;
+  flex-basis: 100%;
+}
+.info__name {
+  font-weight: 1000;
+  font-size: 20px;
+  margin: 0;
+}
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.info__email {
+  margin: 0;
 }
 .location__city,
 .team__name,
@@ -168,19 +191,29 @@ h1 {
 .location-svg,
 .filter__location-icon {
   width: 20px;
+  margin-right: 4px;
 }
 .hours {
   background: #c80046;
-  padding: 5px 12px;
   border-radius: 15px;
   margin: auto;
   color: #fff;
   display: flex;
-  max-width: 9%;
-  margin-right: 5em;
+  justify-content: center;
+  max-width: 7%;
+  max-height: 2em;
 }
 .chevron {
   transform: rotate(90deg);
+  margin-left: 2em;
+  margin-right: 2em;
   font-size: 2.2em;
+}
+.skills {
+  width: 100%;
+}
+.skills__flex {
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>
