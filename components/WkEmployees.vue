@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page__container">
     <div class="banner">
       <img src="~assets/Novicell-logo.png" alt="" class="header__logo" />
       <p class="banner__headline">Who Knows?</p>
@@ -11,61 +11,67 @@
           placeholder="...React"
           class="input__field"
         />
-        <input type="button" @click="sendQuery()" />
+        <button class="input__button" @click="sendQuery()" />
       </div>
     </div>
-    <div class="resultNumber">
+    <div class="resultNumber" v-show="employees.length > 0">
       <span></span>
       <div class="resultNumber__text">
         We found <span>{{ employees.length }} wise guys</span>, from your search
         on <span>{{ search }}</span>
       </div>
     </div>
-    <div class="box">
-      <div v-for="(row, index) in filteredProjects" :key="`employee-${index}`">
-        <div class="employees">
-          <div class="avatar">
-            <img :src="row.avatar" alt="" class="avatar-img" />
-          </div>
-          <div class="info">
-            <div>
-              <p class="info__name">{{ row.name }}</p>
-              <p class="info__email">Ala@novicell.dk</p>
+    <div v-if="employees.length > 0">
+      <div class="box">
+        <div
+          v-for="(row, index) in filteredEmployees"
+          :key="`employee-${index}`"
+        >
+          <div class="employees">
+            <div class="avatar">
+              <img :src="row.avatar" alt="" class="avatar-img" />
+            </div>
+            <div class="info">
+              <div>
+                <p class="info__name">{{ row.name }}</p>
+                <p class="info__email">Ala@novicell.dk</p>
+              </div>
+            </div>
+            <div class="location">
+              <img src="~assets/location.svg" class="location-svg" />
+              <p class="location__city">{{ row.Location }}</p>
+            </div>
+            <div class="team">
+              <img src="~assets/suitcase.svg" class="location-svg" />
+              <p class="team__name">{{ row.Team }}</p>
+            </div>
+            <div class="hours">
+              <img src="~assets/wall-clock.svg" class="location-svg" />
+              <p class="hours__number">120</p>
+            </div>
+            <div class="chevron" @click="selected = row.id">
+              <!--'' : '&lsaquo;' -->
+              <p>&rsaquo;</p>
             </div>
           </div>
-          <div class="location">
-            <img src="~assets/location.svg" class="location-svg" />
-            <p class="location__city">{{ row.Location }}</p>
-          </div>
-          <div class="team">
-            <img src="~assets/suitcase.svg" class="location-svg" />
-            <p class="team__name">{{ row.Team }}</p>
-          </div>
-          <div class="hours">
-            <img src="~assets/wall-clock.svg" class="location-svg" />
-            <p class="hours__number">120</p>
-          </div>
-          <div class="chevron" @click="selected = row.id">
-            <!--'' : '&lsaquo;' -->
-            <p>&rsaquo;</p>
-          </div>
-        </div>
-        <div class="hide" :class="{ show: row.id == selected }">
-          <div
-            v-for="(skill, index) in row.Skills"
-            :key="`skill-${index}`"
-            class="skills"
-          >
-            <div class="skills__flex">
-              <div class="skills__name"></div>
-              <div class="skills__project"></div>
-              <div class="skills__lastcommit"></div>
-              <div class="skills_hours"></div>
+          <div class="hide" :class="{ show: row.id == selected }">
+            <div
+              v-for="(skill, index) in row.Skills"
+              :key="`skill-${index}`"
+              class="skills"
+            >
+              <div class="skills__flex">
+                <div class="skills__name"></div>
+                <div class="skills__project"></div>
+                <div class="skills__lastcommit"></div>
+                <div class="skills_hours"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div v-else class="beforeSearch"></div>
   </div>
 </template>
 
@@ -80,50 +86,30 @@ export default {
       selected: undefined,
     }
   },
+  computed: {
+    filteredEmployees() {
+      let filterEmployees = this.employees
+      if (this.locations.filters.length > 0) {
+        filterEmployees = filterEmployees.filter((row) => {
+          return this.locations.filters.includes(row.Location)
+        })
+      }
+      return filterEmployees
+    },
+    ...mapState(['employees', 'locations', 'filters']),
+  },
   methods: {
     sendQuery() {
       this.$store.dispatch('loadEmployees', this.search)
     },
   },
-  //   When mounted post registrations from store
-  // computed: ,
-  // mix this into the outer object with the object spread operator
-
-  computed: {
-    // employees() {
-    // return this.$store.state.employees
-    // },
-    filteredProjects() {
-      let filterprojects = this.employees
-      if (this.locations.filters.length > 0) {
-        filterprojects = filterprojects.filter((row) => {
-          return this.locations.filters.includes(row.Location)
-        })
-      }
-      if (this.checkedTeam.length > 0) {
-        filterprojects = filterprojects.filter((row) => {
-          return this.checkedTeam.includes(row.Team)
-        })
-      }
-      return filterprojects
-    },
-    /*
-    filteredid() {
-      if (this.location) {
-        return this.employees.filter((row) =>
-          row.Location.toLowerCase().includes('location 1')
-        )
-      }
-    },
-    */
-    // updatedArray = this.employees.filter((item) =>
-    //  item.id !== updatedItem.id).concat[updatedItem],
-    ...mapState(['employees', 'locations', 'filters']),
-  },
 }
 </script>
 
 <style scoped>
+.page__container {
+  background-color: var(--color-platinum);
+}
 .resultNumber {
   background-color: var(--color-spearmint);
   padding: 0.3em;
@@ -284,15 +270,15 @@ export default {
 .input {
   width: 100%;
   margin-bottom: 10px;
+  display: inline-block;
 }
 .icon {
   padding: 10px;
   min-width: 40px;
 }
 .input__field {
-  width: 30%;
+  width: 100%;
   padding: 10px;
-  background: url(~assets/search.svg) no-repeat right center;
   background-color: #fff;
   border-radius: 20px;
   border: 0;
@@ -307,5 +293,24 @@ export default {
 }
 .input--search {
   display: inline-flex;
+}
+.input__button {
+  position: absolute;
+  right: 0;
+  top: 17%;
+  height: 30px;
+  width: 30px;
+  border: 0;
+  background-color: #fff;
+  background: url(~assets/search.svg) no-repeat right center;
+}
+.input {
+  width: 30%;
+  position: relative;
+}
+.beforeSearch {
+  background-color: var(--color-platinum);
+  height: 100%;
+  margin-bottom: 100vh;
 }
 </style>

@@ -10,11 +10,10 @@
 export default {}
 </script>
 
-<style>
+<style scoped>
 .container {
   font-family: var(--base-font-family);
-}
-.box {
+  background-color: var(--color-platinum);
   height: 100vh;
 }
 .banner {
@@ -55,7 +54,6 @@ export default {}
 .input__field {
   width: 25%;
   padding: 10px;
-  background: url(~assets/search.svg) no-repeat right center;
   background-color: #fff;
   border-radius: 20px;
   /*
