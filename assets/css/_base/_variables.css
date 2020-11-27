@@ -1,0 +1,29 @@
+:root {
+      /* Default colors
+  ********************/
+  --color-red: #c80046;
+  --color-berry: #7c0435;
+  --color-plum: #510035;
+  --color-spearmint: #75bc7f;
+  --color-longfarm-blue: #c0e3de;
+  --color-puerto-rico: #43b7a5;
+  --color-pepper: #232323;
+  --color-white: #fff;
+  --color-white-truffle: #f2f2f2;
+  --color-platinum: #eaeaea;
+  --color-gray: #bbb;
+  --color-taupe-gray: #909090;
+
+  /* Typography
+********************/
+--base-font-family: 'Averta', 'sans-serif';
+--base-font-size: 1em;
+--base-font-light-weight: 300;
+--base-font-regular-weight: 500;
+--heading-font-family: 'Averta', 'sans-serif';
+--heading-font-weight: 700;
+
+
+
+
+}

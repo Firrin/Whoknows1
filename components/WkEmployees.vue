@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <div class="box">
+  <div class="page__container">
+    <div class="banner">
+      <img src="~assets/Novicell-logo.png" alt="" class="header__logo" />
+      <p class="banner__headline">Who Knows?</p>
+      <p class="banner__tagline">Find Novicells most experienced employee</p>
       <div class="input img">
         <input
           v-model="search"
@@ -8,33 +11,67 @@
           placeholder="...React"
           class="input__field"
         />
+        <button class="input__button" @click="sendQuery()" />
       </div>
-      <div
-        v-for="(row, index) in filteredBlogs"
-        :key="`employee-${index}`"
-        class="employees"
-      >
-        <div class="info">
-          <h2>{{ row.username }}</h2>
-          <p>Ala@novicell.dk</p>
-        </div>
-        <div class="location">
-          <img src="~assets/location.svg" class="location-svg" />
-          <p class="location__city"></p>
-        </div>
-        <div class="team">
-          <img src="~assets/suitcase.svg" class="location-svg" />
-          <p class="team__name"></p>
-        </div>
-        <div class="hours">
-          <img src="~assets/wall-clock.svg" class="location-svg" />
-          <p class="hours__number">120</p>
-        </div>
-        <div class="chevron">
-          <p>&rsaquo;</p>
+    </div>
+    <div class="resultNumber" v-show="employees.length > 0">
+      <span></span>
+      <div class="resultNumber__text">
+        We found <span>{{ employees.length }} wise guys</span>, from your search
+        on <span>{{ search }}</span>
+      </div>
+    </div>
+    <div v-if="employees.length > 0">
+      <div class="box">
+        <div
+          v-for="(row, index) in filteredEmployees"
+          :key="`employee-${index}`"
+        >
+          <div class="employees">
+            <div class="avatar">
+              <img :src="row.avatar" alt="" class="avatar-img" />
+            </div>
+            <div class="info">
+              <div>
+                <p class="info__name">{{ row.name }}</p>
+                <p class="info__email">Ala@novicell.dk</p>
+              </div>
+            </div>
+            <div class="location">
+              <img src="~assets/location.svg" class="location-svg" />
+              <p class="location__city">{{ row.Location }}</p>
+            </div>
+            <div class="team">
+              <img src="~assets/suitcase.svg" class="location-svg" />
+              <p class="team__name">{{ row.Team }}</p>
+            </div>
+            <div class="hours">
+              <img src="~assets/wall-clock.svg" class="location-svg" />
+              <p class="hours__number">120</p>
+            </div>
+            <div class="chevron" @click="selected = row.id">
+              <!--'' : '&lsaquo;' -->
+              <p>&rsaquo;</p>
+            </div>
+          </div>
+          <div class="hide" :class="{ show: row.id == selected }">
+            <div
+              v-for="(skill, index) in row.Skills"
+              :key="`skill-${index}`"
+              class="skills"
+            >
+              <div class="skills__flex">
+                <div class="skills__name"></div>
+                <div class="skills__project"></div>
+                <div class="skills__lastcommit"></div>
+                <div class="skills_hours"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <div v-else class="beforeSearch"></div>
   </div>
 </template>
 
@@ -44,54 +81,114 @@ export default {
   data() {
     return {
       search: '',
+      checkedLocation: [],
+      checkedTeam: [],
+      selected: undefined,
     }
   },
-  //   When mounted post registrations from store
-  // computed: ,
-  // mix this into the outer object with the object spread operator
-  mounted() {
-    this.$store.dispatch('loadEmployees')
-  },
   computed: {
-    // employees() {
-    // return this.$store.state.employees
-    // },
-    filteredBlogs() {
-      const keyword = this.search.toLowerCase()
-      if (!keyword.length) return this.employees
-      return this.employees.filter((row) =>
-        row.username.toLowerCase().includes(keyword)
-      )
+    filteredEmployees() {
+      let filterEmployees = this.employees
+      if (this.locations.filters.length > 0) {
+        filterEmployees = filterEmployees.filter((row) => {
+          return this.locations.filters.includes(row.Location)
+        })
+      }
+      return filterEmployees
     },
-    ...mapState(['employees']),
+    ...mapState(['employees', 'locations', 'filters']),
+  },
+  methods: {
+    sendQuery() {
+      this.$store.dispatch('loadEmployees', this.search)
+    },
   },
 }
 </script>
 
-<style>
+<style scoped>
+.page__container {
+  background-color: var(--color-platinum);
+}
+.resultNumber {
+  background-color: var(--color-spearmint);
+  padding: 0.3em;
+  box-shadow: 1px 1px 16px 20px var(--color-spearmint);
+  border-radius: 9px;
+  width: 37%;
+  margin: 1em auto 4em auto;
+  display: flex;
+  justify-content: center;
+}
+.resultNumber__text {
+  font-size: 20px;
+}
+.resultNumber span {
+  font-weight: bold;
+}
 .employees {
   box-shadow: 0px 3px 5px #00000029;
   width: 60%;
-  margin: 1em auto;
+  margin: 1em auto 0 auto;
   display: flex;
-  justify-content: space-between;
   background: #fff;
   border-radius: 0.5em;
-  padding: 1em 1em;
 }
-h1 {
-  font-weight: normal;
+.hide {
+  display: none;
+}
+.show {
+  color: red;
+  background: rgb(218, 218, 218);
+  border-radius: 0 0 0.5em 0.5em;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: 1s ease-in all;
+  margin: 0 auto;
+  width: 60%;
+  padding-bottom: 3em;
+}
+.chevronRotate {
+  transform: rotate(180deg);
+}
+.projects {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 .location,
 .team,
-.hours {
+.hours,
+.avatar {
   width: 100%;
   display: flex;
-  justify-content: center;
-  vertical-align: middle;
+}
+.avatar-img {
+  height: 70px;
+  border-radius: 50%;
+  margin-left: 2em;
+}
+.avatar {
+  margin: 1em 0;
+  width: 16%;
+  padding-right: 15px;
 }
 .info {
-  max-width: 10%;
+  flex-basis: 100%;
+}
+.info__name {
+  font-weight: 1000;
+  font-size: 20px;
+  margin: 0;
+}
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.info__email {
+  margin: 0;
 }
 .location__city,
 .team__name,
@@ -99,21 +196,121 @@ h1 {
   align-items: center;
   display: flex;
 }
-.location-svg {
+.location-svg,
+.filter__location-icon {
   width: 20px;
+  margin-right: 4px;
 }
 .hours {
   background: #c80046;
-  padding: 5px 12px;
   border-radius: 15px;
   margin: auto;
   color: #fff;
   display: flex;
-  max-width: 9%;
-  margin-right: 5em;
+  justify-content: center;
+  max-width: 7%;
+  max-height: 2em;
 }
 .chevron {
   transform: rotate(90deg);
+  margin-left: 2em;
+  margin-right: 2em;
   font-size: 2.2em;
+}
+.skills {
+  width: 100%;
+}
+.skills__flex {
+  display: flex;
+  justify-content: space-evenly;
+}
+.banner {
+  background: rgb(200, 0, 70);
+  background: linear-gradient(
+    180deg,
+    rgba(200, 0, 70, 1) 0%,
+    rgba(100, 0, 35, 1) 100%,
+    rgba(100, 0, 35, 1) 100%
+  );
+  padding-bottom: 5em;
+  margin-bottom: 5em;
+  text-align: center;
+  color: #fff;
+}
+.banner__headline {
+  padding-top: 3em;
+  font-size: 44px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  font-weight: bold;
+  font-family: Averta;
+}
+.banner__tagline {
+  font-size: 22px;
+  margin-block-start: 0em;
+  margin-block-end: 0.5em;
+  font-family: Averta;
+}
+.header__logo {
+  height: 64px;
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+.header {
+  display: block;
+  background-color: rgb(200, 0, 70);
+}
+.container {
+  background: #eaeaea;
+}
+.input img {
+  position: absolute;
+}
+.input {
+  width: 100%;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+.icon {
+  padding: 10px;
+  min-width: 40px;
+}
+.input__field {
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 20px;
+  border: 0;
+  height: 23px;
+  /*
+    display: inline-block;
+    margin: auto;
+    height: 3em;
+    width: 25%;
+    border-radius: 12px;
+    */
+}
+.input--search {
+  display: inline-flex;
+}
+.input__button {
+  position: absolute;
+  right: 0;
+  top: 17%;
+  height: 30px;
+  width: 30px;
+  border: 0;
+  background-color: #fff;
+  background: url(~assets/search.svg) no-repeat right center;
+}
+.input {
+  width: 30%;
+  position: relative;
+}
+.beforeSearch {
+  background-color: var(--color-platinum);
+  height: 100%;
+  margin-bottom: 100vh;
 }
 </style>
