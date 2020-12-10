@@ -1,26 +1,5 @@
 <template>
   <div class="page__container">
-    <div class="banner">
-      <img src="~assets/Novicell-logo.png" alt="" class="header__logo" />
-      <p class="banner__headline">Who Knows?</p>
-      <p class="banner__tagline">Find Novicells most experienced employee</p>
-      <div class="input img">
-        <input
-          v-model="search"
-          type="text"
-          placeholder="...React"
-          class="input__field"
-        />
-        <button class="input__button" @click="sendQuery()" />
-      </div>
-    </div>
-    <div class="resultNumber" v-show="employees.length > 0">
-      <span></span>
-      <div class="resultNumber__text">
-        We found <span>{{ employees.length }} wise guys</span>, from your search
-        on <span>{{ search }}</span>
-      </div>
-    </div>
     <div v-if="employees.length > 0">
       <div class="box">
         <div
@@ -34,7 +13,7 @@
             <div class="info">
               <div>
                 <p class="info__name">{{ row.name }}</p>
-                <p class="info__email">Ala@novicell.dk</p>
+                <p class="info__email">{{ row.Email }}</p>
               </div>
             </div>
             <div class="location">
@@ -47,7 +26,7 @@
             </div>
             <div class="hours">
               <img src="~assets/wall-clock.svg" class="location-svg" />
-              <p class="hours__number">120</p>
+              <p class="hours__number">{{ row.Hours }}</p>
             </div>
             <div class="chevron" @click="selected = row.id">
               <!--'' : '&lsaquo;' -->
@@ -80,7 +59,6 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      search: '',
       checkedLocation: [],
       checkedTeam: [],
       selected: undefined,
@@ -98,11 +76,6 @@ export default {
     },
     ...mapState(['employees', 'locations', 'filters']),
   },
-  methods: {
-    sendQuery() {
-      this.$store.dispatch('loadEmployees', this.search)
-    },
-  },
 }
 </script>
 
@@ -110,35 +83,18 @@ export default {
 .page__container {
   background-color: var(--color-platinum);
 }
-.resultNumber {
-  background-color: var(--color-spearmint);
-  padding: 0.3em;
-  box-shadow: 1px 1px 16px 20px var(--color-spearmint);
-  border-radius: 9px;
-  width: 37%;
-  margin: 1em auto 4em auto;
-  display: flex;
-  justify-content: center;
-}
-.resultNumber__text {
-  font-size: 20px;
-}
-.resultNumber span {
-  font-weight: bold;
-}
 .employees {
   box-shadow: 0px 3px 5px #00000029;
   width: 60%;
   margin: 1em auto 0 auto;
   display: flex;
-  background: #fff;
+  background: var(--color-white);
   border-radius: 0.5em;
 }
 .hide {
   display: none;
 }
 .show {
-  color: red;
   background: rgb(218, 218, 218);
   border-radius: 0 0 0.5em 0.5em;
   display: flex;
@@ -202,10 +158,10 @@ export default {
   margin-right: 4px;
 }
 .hours {
-  background: #c80046;
+  background: var(--color-red);
   border-radius: 15px;
   margin: auto;
-  color: #fff;
+  color: var(--color-white);
   display: flex;
   justify-content: center;
   max-width: 7%;
@@ -224,93 +180,8 @@ export default {
   display: flex;
   justify-content: space-evenly;
 }
-.banner {
-  background: rgb(200, 0, 70);
-  background: linear-gradient(
-    180deg,
-    rgba(200, 0, 70, 1) 0%,
-    rgba(100, 0, 35, 1) 100%,
-    rgba(100, 0, 35, 1) 100%
-  );
-  padding-bottom: 5em;
-  margin-bottom: 5em;
-  text-align: center;
-  color: #fff;
-}
-.banner__headline {
-  padding-top: 3em;
-  font-size: 44px;
-  margin-block-start: 0em;
-  margin-block-end: 0em;
-  font-weight: bold;
-  font-family: Averta;
-}
-.banner__tagline {
-  font-size: 22px;
-  margin-block-start: 0em;
-  margin-block-end: 0.5em;
-  font-family: Averta;
-}
-.header__logo {
-  height: 64px;
-  position: absolute;
-  top: 2%;
-  left: 2%;
-}
-.header {
-  display: block;
-  background-color: rgb(200, 0, 70);
-}
-.container {
-  background: #eaeaea;
-}
-.input img {
-  position: absolute;
-}
-.input {
-  width: 100%;
-  margin-bottom: 10px;
-  display: inline-block;
-}
 .icon {
   padding: 10px;
   min-width: 40px;
-}
-.input__field {
-  width: 100%;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 20px;
-  border: 0;
-  height: 23px;
-  /*
-    display: inline-block;
-    margin: auto;
-    height: 3em;
-    width: 25%;
-    border-radius: 12px;
-    */
-}
-.input--search {
-  display: inline-flex;
-}
-.input__button {
-  position: absolute;
-  right: 0;
-  top: 17%;
-  height: 30px;
-  width: 30px;
-  border: 0;
-  background-color: #fff;
-  background: url(~assets/search.svg) no-repeat right center;
-}
-.input {
-  width: 30%;
-  position: relative;
-}
-.beforeSearch {
-  background-color: var(--color-platinum);
-  height: 100%;
-  margin-bottom: 100vh;
 }
 </style>

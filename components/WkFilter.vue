@@ -1,12 +1,11 @@
 <template>
   <div class="filter">
     <div class="container-filter">
-      <h3 class="filter__title"></h3>
       <img src="~assets/location.svg" class="filter__location-icon" />
       Location
     </div>
     <div class="checkboxes">
-      <div>
+      <div class="checkboxes__container">
         <label class="container"
           >Aarhus
           <input
@@ -98,28 +97,31 @@ export default {
   width: 20px;
 }
 .checkboxes {
-  background: #fff;
-  max-height: 10em;
+  background: var(--color-white);
+  max-height: 11em;
   overflow-y: scroll;
   margin-left: 0.2%;
   border-radius: 0 0 4px 4px;
 }
+.checkboxes__container {
+  margin-top: 0.4em;
+}
 .checkbox {
-  background: #f2f2f2;
+  background: var(--color-white-truffle);
 }
 .checkboxes::-webkit-scrollbar {
   width: 8px; /* width of the entire scrollbar */
 }
 .checkboxes::-webkit-scrollbar-thumb {
   border-radius: 20px; /* roundness of the scroll thumb */
-  border: 3px solid #909090; /* creates padding around scroll thumb */
-  background: #909090;
+  border: 3px solid var(--color-taupe-gray); /* creates padding around scroll thumb */
+  background: var(--color-taupe-gray);
 }
 .filter__checkboxes > div {
   padding: 1em 0;
 }
 .filter {
-  background-color: #f2f2f2;
+  background-color: var(--color-white-truffle);
   position: absolute;
   top: 64%;
   right: 2%;
@@ -128,14 +130,15 @@ export default {
   z-index: 1;
 }
 .container-filter {
-  background: #fff;
+  background: var(--color-white);
   box-shadow: 0px 3px 5px #00000029;
   border: 1px solid #00000029;
   padding: 4px;
-  color: #232323;
+  color: var(--color-pepper);
+  font-size: 20px;
 }
 .filter__location-icon {
-  height: 15px;
+  height: 18px;
 }
 .filter__input {
   margin: 0 10px;
@@ -147,11 +150,8 @@ export default {
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
-  background: #fff;
+  background: var(--color-white);
 }
 /* Hide the browser's default checkbox */
 .container .filter__input {
@@ -165,11 +165,11 @@ export default {
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 8px;
+  top: 3px;
   left: 8px;
   height: 20px;
   width: 20px;
-  border: 1px solid grey;
+  border: 1px solid var(--color-taupe-gray);
   border-radius: 5px;
 }
 
@@ -179,7 +179,7 @@ export default {
 
 /* When the checkbox is checked, add a blue background */
 .container .filter__input:checked ~ .checkmark {
-  background-color: green;
+  background-color: var(--color-spearmint);
   border: none;
 }
 
@@ -201,7 +201,7 @@ export default {
   top: 5px;
   width: 5px;
   height: 10px;
-  border: solid white;
+  border: solid var(--color-white);
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);

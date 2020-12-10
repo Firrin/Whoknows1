@@ -18,7 +18,7 @@ export const actions = {
   loadEmployees(context, payload) {
     axios
       .get(
-        `https://5fa909b5c9b4e90016e69eb7.mockapi.io/Employees?search=${payload}`
+        `https://5fa909b5c9b4e90016e69eb7.mockapi.io/Employees?Skills=${payload}&orderBy=Hours&order=desc`
       )
       .then((response) => response.data)
       .then((employees) => {
