@@ -7,13 +7,14 @@
       <div class="input img">
         <form>
           <input
-            v-model="search"
+            v-model.lazy="search"
             type="text"
             placeholder="...React"
             class="input__field"
           />
           <input
             type="submit"
+            value=""
             class="input__button"
             @click.prevent="sendQuery()"
           />
