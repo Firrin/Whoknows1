@@ -13,6 +13,10 @@ export const mutations = {
     //   state.locations.filters = state.locations.filters.concat(payload)
     state.locations.filters = payload
   },
+  addNewTeam(state, payload) {
+    //   state.locations.filters = state.locations.filters.concat(payload)
+    state.locations.teams = payload
+  },
 }
 export const actions = {
   loadEmployees(context, payload) {
@@ -29,5 +33,9 @@ export const actions = {
   handleFilter(context, payload) {
     console.log(payload)
     context.commit('addNewFilter', payload)
+  },
+  handleTeam(context, payload) {
+    console.log(payload)
+    context.commit('addNewTeam', payload)
   },
 }

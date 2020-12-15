@@ -1,7 +1,7 @@
 /* import axios from 'axios' */
 export const state = () => ({
-  locations: [],
   filters: [],
+  teams: [],
 })
 export const mutations = {}
 export const actions = {}
