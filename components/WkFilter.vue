@@ -1,90 +1,78 @@
 <template>
-  <div class="filter">
-    <div class="container-filter">
-      <img src="~assets/location.svg" class="filter__location-icon" />
-      Location
+  <div v-show="employees.length > 0" class="fadeInRight">
+    <div class="filter">
+      <div class="container-filter">
+        <img src="~assets/location.svg" class="filter__location-icon" />
+        Location
+      </div>
+      <div class="checkboxes">
+        <div v-for="(city, index) in cities" :key="`employee-${index}`">
+          <div class="checkboxes__container">
+            <label class="container"
+              >{{ city }}
+              <input
+                v-model="checkedLocation"
+                type="checkbox"
+                :value="city"
+                class="filter__input checkbox"
+                @change="Addchecked()" /><span class="checkmark"></span
+            ></label>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="checkboxes">
-      <div class="checkboxes__container">
-        <label class="container"
-          >Aarhus
-          <input
-            v-model="checkedLocation"
-            type="checkbox"
-            value="Aarhus"
-            class="filter__input checkbox"
-            @change="Addchecked()" /><span class="checkmark"></span
-        ></label>
+    <div class="filter-2">
+      <div class="container-filter-2">
+        <img src="~assets/suitcase.svg" class="filter__location-icon" />
+        Team
       </div>
-      <div>
-        <label class="container"
-          >London
-          <input
-            v-model="checkedLocation"
-            type="checkbox"
-            value="London"
-            class="filter__input checkbox"
-            @change="Addchecked()" /><span class="checkmark"></span
-        ></label>
-      </div>
-      <div>
-        <label class="container"
-          >København
-          <input
-            v-model="checkedLocation"
-            type="checkbox"
-            value="Copenhagen"
-            class="filter__input checkbox"
-            @change="Addchecked()" /><span class="checkmark"></span
-        ></label>
-      </div>
-      <div>
-        <label class="container"
-          >Barcelona
-          <input
-            v-model="checkedLocation"
-            type="checkbox"
-            value="Barcelona"
-            class="filter__input checkbox"
-            @change="Addchecked()" /><span class="checkmark"></span
-        ></label>
-      </div>
-      <div>
-        <label class="container"
-          >Oslo
-          <input
-            v-model="checkedLocation"
-            type="checkbox"
-            value="Oslo"
-            class="filter__input checkbox"
-            @change="Addchecked()" /><span class="checkmark"></span
-        ></label>
-      </div>
-      <div>
-        <label class="container"
-          >Amsterdam
-          <input
-            v-model="checkedLocation"
-            type="checkbox"
-            value="Amsterdam"
-            class="filter__input checkbox"
-            @change="Addchecked()" /><span class="checkmark"></span
-        ></label>
+      <div class="checkboxes">
+        <div v-for="team in teams" :key="team">
+          <div class="checkboxes__container">
+            <label class="container"
+              >{{ team }}
+              <input
+                v-model="checkedTeam"
+                type="checkbox"
+                :value="team"
+                class="filter__input checkbox"
+                @change="AddcheckedTeam()" /><span class="checkmark"></span
+            ></label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
       checkedLocation: [],
+      checkedTeam: [],
+      cities: ['Aarhus', 'London', 'Amsterdam', 'Oslo', 'Madrid', 'Barcelona'],
+      teams: [
+        'Front-end',
+        'Umbraco',
+        'Sitecore',
+        'Data value',
+        'Business Intelligence',
+        'Dynamic Web',
+        'Custom Solutions',
+      ],
     }
+  },
+  computed: {
+    ...mapState(['employees']),
   },
   methods: {
     Addchecked() {
       this.$store.dispatch('handleFilter', this.checkedLocation)
+    },
+    AddcheckedTeam() {
+      this.$store.dispatch('handleTeam', this.checkedTeam)
     },
   },
 }
@@ -96,12 +84,24 @@ export default {
   height: 20px;
   width: 20px;
 }
+.fadeInRight {
+  animation: fadeIn ease 5s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .checkboxes {
   background: var(--color-white);
   max-height: 11em;
   overflow-y: scroll;
   margin-left: 0.2%;
   border-radius: 0 0 4px 4px;
+  box-shadow: 0px 3px 5px #00000029;
 }
 .checkboxes__container {
   margin-top: 0.4em;
@@ -110,11 +110,11 @@ export default {
   background: var(--color-white-truffle);
 }
 .checkboxes::-webkit-scrollbar {
-  width: 8px; /* width of the entire scrollbar */
+  width: 8px;
 }
 .checkboxes::-webkit-scrollbar-thumb {
-  border-radius: 20px; /* roundness of the scroll thumb */
-  border: 3px solid var(--color-taupe-gray); /* creates padding around scroll thumb */
+  border-radius: 20px;
+  border: 3px solid var(--color-taupe-gray);
   background: var(--color-taupe-gray);
 }
 .filter__checkboxes > div {
@@ -129,7 +129,17 @@ export default {
   margin: 1%;
   z-index: 1;
 }
-.container-filter {
+.filter-2 {
+  background-color: var(--color-white-truffle);
+  position: absolute;
+  top: 90%;
+  right: 2%;
+  width: 15vw;
+  margin: 1%;
+  z-index: 1;
+}
+.container-filter,
+.container-filter-2 {
   background: var(--color-white);
   box-shadow: 0px 3px 5px #00000029;
   border: 1px solid #00000029;
