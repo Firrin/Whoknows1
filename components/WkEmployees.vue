@@ -1,59 +1,59 @@
 <template>
   <div class="page__container">
-    <div v-if="employees.length > 0">
-      <div class="box">
-        <div
-          v-for="(row, index) in filteredEmployees"
-          :key="`employee-${index}`"
-        >
-          <div class="employees">
-            <div class="avatar">
-              <img :src="row.avatar" alt="" class="avatar-img" />
-            </div>
-            <div class="info">
-              <div>
-                <p class="info__name">{{ row.name }}</p>
-                <p class="info__email">{{ row.Email }}</p>
+    <transition name="fade">
+      <div v-show="employees.length" class="fadeInBottom">
+        <div class="box">
+          <div
+            v-for="(row, index) in filteredEmployees"
+            :key="`employee-${index}`"
+          >
+            <div class="employees">
+              <div class="avatar">
+                <img :src="row.avatar" alt="" class="avatar-img" />
+              </div>
+              <div class="info">
+                <div>
+                  <p class="info__name">{{ row.name }}</p>
+                  <p class="info__email">{{ row.Email }}</p>
+                </div>
+              </div>
+              <div class="location">
+                <img src="~assets/location.svg" class="location-svg" />
+                <p class="location__city">{{ row.Location }}</p>
+              </div>
+              <div class="team">
+                <img src="~assets/suitcase.svg" class="location-svg" />
+                <p class="team__name">{{ row.Team }}</p>
+              </div>
+              <div class="hours">
+                <img src="~assets/wall-clock.svg" class="location-svg" />
+                <p class="hours__number">{{ row.Hours }}</p>
+              </div>
+              <div class="chevron" @click="selected = row.id">
+                <!--'' : '&lsaquo;' -->
+                <p>&rsaquo;</p>
               </div>
             </div>
-            <div class="location">
-              <img src="~assets/location.svg" class="location-svg" />
-              <p class="location__city">{{ row.Location }}</p>
-            </div>
-            <div class="team">
-              <img src="~assets/suitcase.svg" class="location-svg" />
-              <p class="team__name">{{ row.Team }}</p>
-            </div>
-            <div class="hours">
-              <img src="~assets/wall-clock.svg" class="location-svg" />
-              <p class="hours__number">{{ row.Hours }}</p>
-            </div>
-            <div class="chevron" @click="selected = row.id">
-              <!--'' : '&lsaquo;' -->
-              <p>&rsaquo;</p>
-            </div>
-          </div>
-          <div class="hide" :class="{ show: row.id == selected }">
-            <div
-              v-for="(skill, index) in row.Skills"
-              :key="`skill-${index}`"
-              class="skills"
-            >
-              <div class="skills__flex">
-                <div class="skills__name"></div>
-                <div class="skills__project"></div>
-                <div class="skills__lastcommit"></div>
-                <div class="skills_hours"></div>
+            <div class="hide" :class="{ show: row.id == selected }">
+              <div
+                v-for="(skill, index) in row.Skills"
+                :key="`skill-${index}`"
+                class="skills"
+              >
+                <div class="skills__flex">
+                  <div class="skills__name"></div>
+                  <div class="skills__project"></div>
+                  <div class="skills__lastcommit"></div>
+                  <div class="skills_hours"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div v-else class="beforeSearch"></div>
+    </transition>
   </div>
 </template>
-
 <script>
 import { mapState } from 'vuex'
 export default {
@@ -72,9 +72,14 @@ export default {
           return this.locations.filters.includes(row.Location)
         })
       }
+      if (this.locations.teams.length > 0) {
+        filterEmployees = filterEmployees.filter((row) => {
+          return this.locations.teams.includes(row.Team)
+        })
+      }
       return filterEmployees
     },
-    ...mapState(['employees', 'locations', 'filters']),
+    ...mapState(['employees', 'locations', 'filters', 'teams']),
   },
 }
 </script>
