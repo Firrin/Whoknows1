@@ -1,0 +1,27 @@
+.fadeInBottom {
+    animation-name: fadeInBottom;
+    animation-duration: 2s;
+  }
+  @keyframes fadeInBottom {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .fadeInRight {
+    animation-name: fadeInRight;
+    animation-timing-function: linear;
+    animation-duration: 4s;
+  }
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(-55%);
+    }
+    to {
+      opacity: 1;
+    }
+  }
