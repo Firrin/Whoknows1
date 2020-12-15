@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="banner">
-      <img src="~assets/Novicell-logo.png" alt="" class="header__logo" />
+      <a class="text-link" href="/">
+        <img
+          src="~assets/Novicell-logo.png"
+          alt=""
+          class="header__logo"
+          @click="redirect('/')"
+      /></a>
       <p class="banner__headline">Who Knows?</p>
       <p class="banner__tagline">Find Novicells most experienced employee</p>
       <div class="input img">
@@ -21,13 +27,15 @@
         </form>
       </div>
     </div>
-    <div v-show="employees.length > 0" class="resultNumber">
-      <span></span>
-      <div class="resultNumber__text">
-        We found <span>{{ employees.length }} wise guys</span>, from your search
-        on <span>{{ search }}</span>
+    <transition name="fade">
+      <div v-show="employees.length" class="resultNumber fadeInBottom">
+        <span><img src="~assets/magic-wand.svg" class="wand-svg" /></span>
+        <div class="resultNumber__text">
+          We found <span>{{ employees.length }} wise guys</span>, from your
+          search on <span>{{ search }}</span>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -52,11 +60,11 @@ export default {
 
 <style scoped>
 .resultNumber {
-  background-color: var(--color-spearmint);
+  background-color: var(--color-longfarm-blue);
   padding: 0.3em;
-  box-shadow: 1px 1px 16px 20px var(--color-spearmint);
+  box-shadow: 1px 1px 16px 20px var(--color-longfarm-blue);
   border-radius: 9px;
-  width: 37%;
+  width: 30%;
   margin: 1em auto 4em auto;
   display: flex;
   justify-content: center;
@@ -67,7 +75,9 @@ export default {
 .resultNumber span {
   font-weight: bold;
 }
-
+.wand-svg {
+  margin-right: 0.5em;
+}
 .banner {
   background: rgb(200, 0, 70);
   background: linear-gradient(
