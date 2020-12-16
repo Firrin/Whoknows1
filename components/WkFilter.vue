@@ -21,8 +21,8 @@
         </div>
       </div>
     </div>
-    <div class="filter-2">
-      <div class="container-filter-2">
+    <div class="team-filter">
+      <div class="container-team-filter">
         <img src="~assets/suitcase.svg" class="filter__location-icon" />
         Team
       </div>
@@ -129,7 +129,7 @@ export default {
   margin: 1%;
   z-index: 1;
 }
-.filter-2 {
+.team-filter {
   background-color: var(--color-white-truffle);
   position: absolute;
   top: 90%;
@@ -139,7 +139,7 @@ export default {
   z-index: 1;
 }
 .container-filter,
-.container-filter-2 {
+.container-team-filter {
   background: var(--color-white);
   box-shadow: 0px 3px 5px #00000029;
   border: 1px solid #00000029;
@@ -182,11 +182,6 @@ export default {
   border: 1px solid var(--color-taupe-gray);
   border-radius: 5px;
 }
-
-/* On mouse-over, add a grey background color */
-.container:hover .filter__input ~ .checkmark {
-}
-
 /* When the checkbox is checked, add a blue background */
 .container .filter__input:checked ~ .checkmark {
   background-color: var(--color-spearmint);
@@ -207,8 +202,8 @@ export default {
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 9px;
-  top: 5px;
+  left: 6px;
+  top: 3px;
   width: 5px;
   height: 10px;
   border: solid var(--color-white);
