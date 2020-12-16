@@ -6,7 +6,7 @@
         Location
       </div>
       <div class="checkboxes">
-        <div v-for="(city, index) in cities" :key="`employee-${index}`">
+        <div v-for="city  in cities" :key="city">
           <div class="checkboxes__container">
             <label class="container"
               >{{ city }}
