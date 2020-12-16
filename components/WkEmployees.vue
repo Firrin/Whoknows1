@@ -29,23 +29,9 @@
                 <img src="~assets/wall-clock.svg" class="location-svg" />
                 <p class="hours__number">{{ row.Hours }}</p>
               </div>
-              <div class="chevron" @click="selected = row.id">
+              <div class="chevron">
                 <!--'' : '&lsaquo;' -->
                 <p>&rsaquo;</p>
-              </div>
-            </div>
-            <div class="hide" :class="{ show: row.id == selected }">
-              <div
-                v-for="(skill, index) in row.Skills"
-                :key="`skill-${index}`"
-                class="skills"
-              >
-                <div class="skills__flex">
-                  <div class="skills__name"></div>
-                  <div class="skills__project"></div>
-                  <div class="skills__lastcommit"></div>
-                  <div class="skills_hours"></div>
-                </div>
               </div>
             </div>
           </div>
@@ -58,11 +44,7 @@
 import { mapState } from 'vuex'
 export default {
   data() {
-    return {
-      checkedLocation: [],
-      checkedTeam: [],
-      selected: undefined,
-    }
+    return {}
   },
   computed: {
     filteredEmployees() {
@@ -95,28 +77,6 @@ export default {
   display: flex;
   background: var(--color-white);
   border-radius: 0.5em;
-}
-.hide {
-  display: none;
-}
-.show {
-  background: rgb(218, 218, 218);
-  border-radius: 0 0 0.5em 0.5em;
-  display: flex;
-  justify-content: space-between;
-  overflow: hidden;
-  transition: 1s ease-in all;
-  margin: 0 auto;
-  width: 60%;
-  padding-bottom: 3em;
-}
-.chevronRotate {
-  transform: rotate(180deg);
-}
-.projects {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
 }
 .location,
 .team,
