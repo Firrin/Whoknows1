@@ -2,11 +2,7 @@
   <div>
     <div class="banner">
       <a class="text-link" href="/">
-        <img
-          src="~assets/Novicell-logo.png"
-          alt=""
-          class="header__logo"
-          @click="redirect('/')"
+        <img src="~assets/Novicell-logo.png" alt="" class="header__logo"
       /></a>
       <p class="banner__headline">Who Knows?</p>
       <p class="banner__tagline">Find Novicells most experienced employee</p>
