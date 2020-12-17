@@ -138,13 +138,6 @@ export default {
   margin-right: 2em;
   font-size: 2.2em;
 }
-.skills {
-  width: 100%;
-}
-.skills__flex {
-  display: flex;
-  justify-content: space-evenly;
-}
 .icon {
   padding: 10px;
   min-width: 40px;
